@@ -1,7 +1,6 @@
 import enchant
 import argparse
 import re
-from collections import OrderedDict
 
 parser = argparse.ArgumentParser(description='Find hidden words.')
 parser.add_argument('--text', help='text file to scan', default="input.txt")
