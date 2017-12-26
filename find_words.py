@@ -1,6 +1,7 @@
 import enchant
 import argparse
 import re
+from collections import OrderedDict
 
 parser = argparse.ArgumentParser(description='Find hidden words.')
 parser.add_argument('--text', help='text file to scan', default="input.txt")
@@ -15,7 +16,7 @@ with open(args.text) as file:
 
 d = enchant.Dict("en_GB")
 n = len(text)
-results = set()
+results = []
 
 for start_pos in range(n):
     for word_length in range(args.min_length, args.max_length+1):
@@ -24,8 +25,8 @@ for start_pos in range(n):
             continue
         possible_word = text[start_pos:end_pos]
         if d.check(possible_word):
-            results.add(possible_word)
+            results.append(possible_word + " " + str(start_pos))
 
 with open(args.output, 'w') as file:
-    for word in results:
+    for word in sorted(results):
         file.write(word + '\n')
